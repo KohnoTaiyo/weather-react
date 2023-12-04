@@ -1,0 +1,10 @@
+{
+  "typescript.format.enable": false,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": ["source.fixAll.eslint"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "css.validate": false,
+  "prettier.configPath": "prettier.config.js",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": ["classcat", "tailwindcss", "precommit", "ianvs"]
+}
