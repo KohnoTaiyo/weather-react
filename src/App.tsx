@@ -1,9 +1,17 @@
+import { useState } from "react";
+
 import "./App.scss";
 
+import { TextBox } from "./components/TextBox";
+
 function App() {
+  const [text, setText] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit");
+    if (!text) return;
+    setErrorMessage("エラー文言");
   };
 
   const mock = [
@@ -32,9 +40,9 @@ function App() {
   return (
     <main className="app">
       <h1>Weather Forecast</h1>
-      <form onSubmit={onSubmit} className="form">
-        <input type="text" className="form__input" placeholder="location" />
-        <input type="submit" value="Search" className="form__submit" />
+      <form onSubmit={onSubmit}>
+        <TextBox value={text} onChange={setText} />
+        {errorMessage && <p className="error">{errorMessage}</p>}
       </form>
       <h3>Weather in Tokyo at 2023-12-05 22:40</h3>
       <div className="current">

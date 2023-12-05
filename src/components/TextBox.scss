@@ -1,0 +1,27 @@
+@use "../styles/variables" as *;
+
+.textBox {
+  display: flex;
+  column-gap: 8px;
+  justify-content: space-between;
+
+  &__input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid $primaryColor;
+    border-radius: 4px;
+  }
+
+  &__submit {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: $primaryColor;
+    color: $whiteColor;
+    font-weight: bold;
+
+    &:focus {
+      outline: 2px solid $skyBlueColor;
+      outline-offset: 1px;
+    }
+  }
+}
