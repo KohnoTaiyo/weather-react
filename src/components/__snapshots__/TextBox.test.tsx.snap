@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <div
+    class="textBox"
+  >
+    <input
+      class="textBox__input"
+      placeholder="location"
+      required=""
+      type="text"
+      value="value"
+    />
+    <input
+      class="textBox__submit"
+      type="submit"
+      value="Search"
+    />
+  </div>
+</div>
+`;
