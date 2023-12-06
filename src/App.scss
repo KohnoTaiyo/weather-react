@@ -68,6 +68,11 @@
       &Date {
         border-bottom: 1px solid $whiteColor;
         padding: 8px;
+        font-weight: bold;
+      }
+
+      &Name {
+        padding: 0 8px 16px;
       }
     }
   }
