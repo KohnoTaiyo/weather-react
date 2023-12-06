@@ -1,41 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.scss";
 
 import { TextBox } from "./components/TextBox";
+import { ForecastFewDaysWeatherType } from "./types";
+
+const FORECAST_DAYS_AMOUNT = 5;
+const formatDate = (date: string) => date.slice(5).replace("-", "/");
 
 function App() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("New York");
   const [errorMessage, setErrorMessage] = useState("");
+  const [forecastWeather, setForecastWeather] = useState<ForecastFewDaysWeatherType | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
+  const { current, forecast, location } = forecastWeather || {};
+
+  const fetchWeather = async (location: string) => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_WEATHER_END_POINT}&q=${location}&days=${FORECAST_DAYS_AMOUNT}&aqi=no&alerts=no`,
+      );
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setForecastWeather(data);
+    } catch (err) {
+      setErrorMessage("The entered place name does not exist.");
+      setForecastWeather(undefined);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeather(text);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!text) return;
-    setErrorMessage("エラー文言");
+    try {
+      if (!text) throw new Error("Please enter a location.");
+      if (typeof text !== "string") throw new Error("Please enter a string.");
+      await fetchWeather(text);
+    } catch (err) {
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      }
+    }
   };
 
-  const mock = [
-    {
-      date: "12/6",
-      icon: "https:////cdn.weatherapi.com/weather/64x64/day/176.png",
-    },
-    {
-      date: "12/7",
-      icon: "https:////cdn.weatherapi.com/weather/64x64/day/176.png",
-    },
-    {
-      date: "12/8",
-      icon: "https:////cdn.weatherapi.com/weather/64x64/day/176.png",
-    },
-    {
-      date: "12/9",
-      icon: "https:////cdn.weatherapi.com/weather/64x64/day/176.png",
-    },
-    {
-      date: "12/10",
-      icon: "https:////cdn.weatherapi.com/weather/64x64/day/176.png",
-    },
-  ];
+  const locationName = [location?.name, location?.region, location?.country].filter(Boolean).join(", ");
 
   return (
     <main className="app">
@@ -44,31 +58,44 @@ function App() {
         <TextBox value={text} onChange={setText} />
         {errorMessage && <p className="error">{errorMessage}</p>}
       </form>
-      <h3>Weather in Tokyo at 2023-12-05 22:40</h3>
-      <div className="current">
-        <img src="https://cdn.weatherapi.com/weather/64x64/night/296.png" className="current_icon" alt="" />
-        <p className="current__name">Light rain</p>
-        <p className="current__temp">
-          <span className="current__tempMain">12</span>°C
-        </p>
-        <div>
-          <p>Humidity: 71%</p>
-          <p>Wind: 13kph</p>
-        </div>
-        <div>
-          <p>Sunrise: 06:35 AM</p>
-          <p>Sunset: 04:27 PM</p>
-        </div>
-      </div>
-      <h3>5days weather</h3>
-      <ul className="forecast">
-        {mock.map((item) => (
-          <li key={item.date} className="forecast__item">
-            <p className="forecast__itemDate">{item.date}</p>
-            <img src={item.icon} alt="" />
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        !errorMessage && (
+          <>
+            <h3>{`Weather in ${locationName} at ${location?.localtime}`}</h3>
+            {current && (
+              <div className="current">
+                <img
+                  src={`https://${current.condition.icon}`}
+                  className="current_icon"
+                  alt={`${current.condition.text} Image`}
+                />
+                <p className="current__name">{current.condition.text}</p>
+                <p className="current__temp">
+                  <span className="current__tempMain">{current.temp_c}</span>°C
+                </p>
+                <p>{`Humidity: ${current.humidity}%`}</p>
+                <p>{`Wind: ${current.wind_kph}kph`}</p>
+              </div>
+            )}
+            {forecast && (
+              <>
+                <h3>5days weather</h3>
+                <ul className="forecast">
+                  {forecast.forecastday.map((item) => (
+                    <li key={item.date} className="forecast__item">
+                      <p className="forecast__itemDate">{formatDate(item.date)}</p>
+                      <img src={item.day.condition.icon} alt="" />
+                      <p className="forecast__itemName">{item.day.condition.text}</p>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </>
+        )
+      )}
     </main>
   );
 }
