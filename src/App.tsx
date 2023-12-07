@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.scss";
 
 import { TextBox } from "./components/TextBox";
+import { getForecastWeather } from "./hooks/fetchers";
 import { ForecastFewDaysWeatherType } from "./types";
 
 const FORECAST_DAYS_AMOUNT = 5;
@@ -18,15 +19,13 @@ function App() {
   const fetchWeather = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_WEATHER_END_POINT}&q=${text}&days=${FORECAST_DAYS_AMOUNT}&aqi=no&alerts=no`,
-      );
-      if (!res.ok) throw new Error();
-      const data = await res.json();
+      const data = await getForecastWeather(text, FORECAST_DAYS_AMOUNT);
       setErrorMessage("");
       setForecastWeather(data);
     } catch (err) {
-      setErrorMessage("The entered place name does not exist.");
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      }
       setForecastWeather(undefined);
     } finally {
       setIsLoading(false);
