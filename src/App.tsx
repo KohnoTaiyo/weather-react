@@ -15,14 +15,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const { current, forecast, location } = forecastWeather || {};
 
-  const fetchWeather = async (location: string) => {
+  const fetchWeather = async () => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_WEATHER_END_POINT}&q=${location}&days=${FORECAST_DAYS_AMOUNT}&aqi=no&alerts=no`,
+        `${process.env.REACT_APP_WEATHER_END_POINT}&q=${text}&days=${FORECAST_DAYS_AMOUNT}&aqi=no&alerts=no`,
       );
       if (!res.ok) throw new Error();
       const data = await res.json();
+      setErrorMessage("");
       setForecastWeather(data);
     } catch (err) {
       setErrorMessage("The entered place name does not exist.");
@@ -33,7 +34,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetchWeather(text);
+    fetchWeather();
   }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +42,8 @@ function App() {
     try {
       if (!text) throw new Error("Please enter a location.");
       if (typeof text !== "string") throw new Error("Please enter a string.");
-      await fetchWeather(text);
+      setErrorMessage("");
+      await fetchWeather();
     } catch (err) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
@@ -63,7 +65,7 @@ function App() {
       ) : (
         !errorMessage && (
           <>
-            <h3>{`Weather in ${locationName} at ${location?.localtime}`}</h3>
+            {location && <h3>{`Weather in ${locationName} at ${location.localtime}`}</h3>}
             {current && (
               <div className="current">
                 <img

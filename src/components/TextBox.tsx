@@ -18,7 +18,7 @@ export function TextBox(props: TextBoxProps) {
         onChange={handleChange}
         required
       />
-      <input type="submit" value="Search" className="textBox__submit" />
+      <input type="submit" value="Search" className="textBox__submit" tabIndex={0} />
     </div>
   );
 }
