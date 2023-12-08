@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App renders correctly init 1`] = `
+<div>
+  <main
+    class="app"
+  >
+    <h1>
+      Weather Forecast
+    </h1>
+    <form>
+      <div
+        class="textBox"
+      >
+        <input
+          class="textBox__input"
+          placeholder="location"
+          required=""
+          type="text"
+          value="New York"
+        />
+        <input
+          class="textBox__submit"
+          tabindex="0"
+          type="submit"
+          value="Search"
+        />
+      </div>
+    </form>
+    <p>
+      Loading...
+    </p>
+  </main>
+</div>
+`;

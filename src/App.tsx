@@ -7,10 +7,11 @@ import { getForecastWeather } from "./hooks/fetchers";
 import { ForecastFewDaysWeatherType } from "./types";
 
 const FORECAST_DAYS_AMOUNT = 5;
+const INITIAL_LOCATION = "New York";
 const formatDate = (date: string) => date.slice(5).replace("-", "/");
 
 function App() {
-  const [text, setText] = useState("New York");
+  const [text, setText] = useState(INITIAL_LOCATION);
   const [errorMessage, setErrorMessage] = useState("");
   const [forecastWeather, setForecastWeather] = useState<ForecastFewDaysWeatherType | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +41,6 @@ function App() {
     e.preventDefault();
     try {
       if (!text) throw new Error("Please enter a location.");
-      if (typeof text !== "string") throw new Error("Please enter a string.");
       setErrorMessage("");
       await fetchWeather();
     } catch (err) {
