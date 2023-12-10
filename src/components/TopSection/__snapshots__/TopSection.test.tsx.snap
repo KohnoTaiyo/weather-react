@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopSection snapshot 1`] = `
+<div>
+  <h1>
+    title
+  </h1>
+  <form>
+    <div
+      class="textBox"
+    >
+      <input
+        class="textBox__input"
+        placeholder="location"
+        required=""
+        type="text"
+        value="value"
+      />
+      <input
+        class="textBox__submit"
+        tabindex="0"
+        type="submit"
+        value="Search"
+      />
+    </div>
+    <p
+      class="error"
+    >
+      error
+    </p>
+  </form>
+</div>
+`;

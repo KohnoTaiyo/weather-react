@@ -11,7 +11,7 @@ describe("TextBox", () => {
     expect(screen.getByRole("button", { name: /Search/i })).toBeTruthy();
   });
 
-  test("renders correctly", () => {
+  test("snapshot", () => {
     const { container } = render(<TextBox value="value" onChange={onChangeMock} />);
     expect(container).toMatchSnapshot();
   });

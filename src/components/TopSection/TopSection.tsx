@@ -2,7 +2,7 @@ import "./TopSection.scss";
 
 import { TextBox } from "../TextBox/TextBox";
 
-type TopSectionProps = {
+export type TopSectionProps = {
   title: string;
   value: string;
   errorMessage?: string;
