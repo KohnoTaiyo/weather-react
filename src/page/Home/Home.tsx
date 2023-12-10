@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import { TextBox } from "../../components/TextBox";
+import { TextBox } from "../../components/TextBox/TextBox";
 import { getForecastWeather } from "../../hooks/fetchers";
 import { ForecastFewDaysWeatherType } from "../../types";
 
