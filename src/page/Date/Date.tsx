@@ -59,14 +59,10 @@ function Date() {
     fetchWeather();
   }, []);
 
-  if (!pathState?.location || !pathState.date || !dayData) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <>
       <TopSection
-        title={`${pathState.location} at ${formatDate(pathState.date)}`}
+        title={`${pathState?.location} at ${formatDate(pathState?.date || "")}`}
         value={text}
         onValueChange={setText}
         onSubmit={onSubmit}
@@ -74,7 +70,8 @@ function Date() {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        !errorMessage && (
+        !errorMessage &&
+        dayData && (
           <>
             <div className="condition">
               <img src={dayData.day.condition.icon} alt="" />
