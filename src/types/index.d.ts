@@ -60,3 +60,8 @@ export type ForecastFewDaysWeatherType = {
   forecast: ForecastFewDaysWeather;
   location: Location;
 };
+
+export type StateParams = {
+  location?: string;
+  date?: string;
+};

@@ -2,24 +2,27 @@ import "./Home.scss";
 
 import { useCallback, useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { TopSection } from "../../components/TopSection/TopSection";
-import { getForecastWeather } from "../../hooks/fetchers";
-import { ForecastFewDaysWeatherType } from "../../types";
-
-const formatDate = (date: string) => date.slice(5).replace("-", "/");
+import { getForecastWeather } from "../../hooks/fetchers/fetchers";
+import { formatDate } from "../../hooks/formatDate";
+import { ForecastFewDaysWeatherType, StateParams } from "../../types";
 
 const FORECAST_DAYS_AMOUNT = 5;
 const INITIAL_LOCATION = "New York";
 
 function Home() {
-  const [text, setText] = useState(INITIAL_LOCATION);
+  const routerParams = useLocation();
+  const pathState = routerParams.state as StateParams;
+  const searchLocation = pathState?.location || INITIAL_LOCATION;
+  const [text, setText] = useState(searchLocation);
   const [errorMessage, setErrorMessage] = useState("");
   const [forecastWeather, setForecastWeather] = useState<ForecastFewDaysWeatherType | undefined>();
   const [isLoading, setIsLoading] = useState(false);
   const { current, forecast, location } = forecastWeather || {};
   const locationName = [location?.name, location?.region, location?.country].filter(Boolean).join(", ");
+  const sendPathParams: StateParams = { location: location?.name, date: location?.localtime };
 
   const fetchWeather = useCallback(async () => {
     setIsLoading(true);
@@ -92,8 +95,13 @@ function Home() {
                 <h3>Next 5days weather</h3>
                 <ul className="forecast">
                   {forecast.forecastday.map((item) => (
-                    <Link to={`/${item.date}`} key={item.date}>
-                      <li className="forecast__item">
+                    <Link
+                      to={{ pathname: `/${location?.name.replace(/\s+/g, "")}` }}
+                      state={sendPathParams}
+                      key={item.date}
+                      className="forecast__item"
+                    >
+                      <li>
                         <p className="forecast__itemDate">{formatDate(item.date)}</p>
                         <img src={item.day.condition.icon} alt="" />
                         <p className="forecast__itemName">{item.day.condition.text}</p>

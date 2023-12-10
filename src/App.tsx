@@ -10,7 +10,7 @@ function App() {
     <main className="app">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:date" element={<Date />} />
+        <Route path="/:location" element={<Date />} />
       </Routes>
     </main>
   );
