@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import { TextBox } from "../../components/TextBox/TextBox";
+import { TopSection } from "../../components/TopSection/TopSection";
 import { getForecastWeather } from "../../hooks/fetchers";
 import { ForecastFewDaysWeatherType } from "../../types";
 
@@ -59,11 +59,13 @@ function Home() {
 
   return (
     <>
-      <h1>Weather Forecast</h1>
-      <form onSubmit={onSubmit}>
-        <TextBox value={text} onChange={setText} />
-        {errorMessage && <p className="error">{errorMessage}</p>}
-      </form>
+      <TopSection
+        title="Weather Forecast"
+        errorMessage={errorMessage}
+        value={text}
+        onValueChange={setText}
+        onSubmit={onSubmit}
+      />
       {isLoading ? (
         <p>Loading...</p>
       ) : (
