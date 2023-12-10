@@ -16,16 +16,16 @@ describe("App", () => {
     });
   });
 
-  test("renders correctly init", () => {
+  test("renders correctly", async () => {
     const { container } = render(<App />);
+    // 初期表示
+    expect(screen.getByText(/Weather Forecast/i)).toBeInTheDocument();
     expect(container).toMatchSnapshot();
-  });
-
-  test("renders correctly rendered", async () => {
-    render(<App />);
+    // 検索後表示
     await waitFor(() => {
-      screen.getByText(/Weather in/i);
-      screen.getByText(/5days weather/i);
+      expect(screen.getByText(/Weather in/i)).toBeInTheDocument();
+      expect(screen.getByText(/5days weather/i)).toBeInTheDocument();
+      expect(container).toMatchSnapshot();
     });
   });
 });
