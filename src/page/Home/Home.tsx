@@ -22,7 +22,6 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const { current, forecast, location } = forecastWeather || {};
   const locationName = [location?.name, location?.region, location?.country].filter(Boolean).join(", ");
-  const sendPathParams: StateParams = { location: location?.name, date: location?.localtime };
 
   const fetchWeather = useCallback(async () => {
     setIsLoading(true);
@@ -94,20 +93,23 @@ function Home() {
               <>
                 <h3>Next 5days weather</h3>
                 <ul className="forecast">
-                  {forecast.forecastday.map((item) => (
-                    <Link
-                      to={{ pathname: `/${location?.name.replace(/\s+/g, "")}` }}
-                      state={sendPathParams}
-                      key={item.date}
-                      className="forecast__item"
-                    >
-                      <li>
-                        <p className="forecast__itemDate">{formatDate(item.date)}</p>
-                        <img src={item.day.condition.icon} alt="" />
-                        <p className="forecast__itemName">{item.day.condition.text}</p>
-                      </li>
-                    </Link>
-                  ))}
+                  {forecast.forecastday.map((item) => {
+                    const sendPathParams: StateParams = { location: location?.name, date: item.date };
+                    return (
+                      <Link
+                        to={{ pathname: `/${location?.name.replace(/\s+/g, "")}` }}
+                        state={sendPathParams}
+                        key={item.date}
+                        className="forecast__item"
+                      >
+                        <li>
+                          <p className="forecast__itemDate">{formatDate(item.date)}</p>
+                          <img src={item.day.condition.icon} alt="" />
+                          <p className="forecast__itemName">{item.day.condition.text}</p>
+                        </li>
+                      </Link>
+                    );
+                  })}
                 </ul>
               </>
             )}

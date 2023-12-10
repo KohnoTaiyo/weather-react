@@ -1,5 +1,10 @@
+import "./Date.scss";
+
 import { useEffect, useState } from "react";
 
+import { BsFillSunriseFill, BsFillSunsetFill } from "react-icons/bs";
+import { FaCloudRain, FaWind } from "react-icons/fa";
+import { WiHumidity } from "react-icons/wi";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { TopSection } from "../../components/TopSection/TopSection";
@@ -12,12 +17,10 @@ function Date() {
   const pathState = routerParams.state as StateParams | undefined;
   const [text, setText] = useState(pathState?.location || "");
   const [errorMessage, setErrorMessage] = useState("");
-  const [forecastWeather, setForecastWeather] = useState<ForecastFewDaysWeatherType | undefined>();
   const [isLoading, setIsLoading] = useState(false);
+  const [forecastWeather, setForecastWeather] = useState<ForecastFewDaysWeatherType | undefined>();
+  const dayData = forecastWeather?.forecast.forecastday[0];
   const navigate = useNavigate();
-
-  console.log({ forecastWeather });
-  console.log({ pathState });
 
   const fetchWeather = async () => {
     setIsLoading(true);
@@ -56,8 +59,8 @@ function Date() {
     fetchWeather();
   }, []);
 
-  if (!pathState?.location || !pathState.date) {
-    return null;
+  if (!pathState?.location || !pathState.date || !dayData) {
+    return <p>Loading...</p>;
   }
 
   return (
@@ -68,7 +71,44 @@ function Date() {
         onValueChange={setText}
         onSubmit={onSubmit}
       />
-      {isLoading ? <p>Loading...</p> : !errorMessage && <></>}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        !errorMessage && (
+          <>
+            <div className="condition">
+              <img src={dayData.day.condition.icon} alt="" />
+              <p className="condition__name">{dayData.day.condition.text}</p>
+              <div className="condition__temp">
+                <p>{`High: ${dayData.day.maxtemp_c}°C`}</p>
+                <p>{`Low: ${dayData.day.mintemp_c}°C`}</p>
+              </div>
+            </div>
+            <div className="status">
+              <p className="status__text">
+                <WiHumidity />
+                {`Humidity: ${dayData.day.avghumidity}%`}
+              </p>
+              <p className="status__text">
+                <FaWind />
+                {`Max wind kph: ${dayData.day.maxwind_kph}km/h`}
+              </p>
+              <p className="status__text">
+                <FaCloudRain />
+                {`Chance of precipitation: ${dayData.day.daily_chance_of_rain}%`}
+              </p>
+              <p className="status__text">
+                <BsFillSunriseFill />
+                {`Sunrise: ${dayData.astro.sunrise}`}
+              </p>
+              <p className="status__text">
+                <BsFillSunsetFill />
+                {`Sunset: ${dayData.astro.sunset}`}
+              </p>
+            </div>
+          </>
+        )
+      )}
     </>
   );
 }
