@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App init renders correctly 1`] = `
+<div>
+  <h1>
+    Weather Forecast
+  </h1>
+  <form>
+    <div
+      class="textBox"
+    >
+      <input
+        class="textBox__input"
+        placeholder="location"
+        required=""
+        type="text"
+        value="New York"
+      />
+      <input
+        class="textBox__submit"
+        tabindex="0"
+        type="submit"
+        value="Search"
+      />
+    </div>
+  </form>
+  <p>
+    Loading...
+  </p>
+</div>
+`;
+
+exports[`App renders correctly fetch success 1`] = `
+<div>
+  <h1>
+    Weather Forecast
+  </h1>
+  <form>
+    <div
+      class="textBox"
+    >
+      <input
+        class="textBox__input"
+        placeholder="location"
+        required=""
+        type="text"
+        value="New York"
+      />
+      <input
+        class="textBox__submit"
+        tabindex="0"
+        type="submit"
+        value="Search"
+      />
+    </div>
+  </form>
+  <h3>
+    Weather in New York, New York, United States of America at 2023-12-08 9:02
+  </h3>
+  <div
+    class="current"
+  >
+    <img
+      alt="Sunny Image"
+      class="current_icon"
+      src="https:////cdn.weatherapi.com/weather/64x64/day/113.png"
+    />
+    <p
+      class="current__name"
+    >
+      Sunny
+    </p>
+    <p
+      class="current__temp"
+    >
+      <span
+        class="current__tempMain"
+      >
+        5
+      </span>
+      °C
+    </p>
+    <p>
+      Humidity: 65%
+    </p>
+    <p>
+      Wind: 3.6kph
+    </p>
+  </div>
+  <h3>
+    5days weather
+  </h3>
+  <ul
+    class="forecast"
+  >
+    <a
+      class="forecast__item"
+      href="/NewYork"
+    >
+      <li>
+        <p
+          class="forecast__itemDate"
+        >
+          12/08
+        </p>
+        <img
+          alt=""
+          src="//cdn.weatherapi.com/weather/64x64/day/143.png"
+        />
+        <p
+          class="forecast__itemName"
+        >
+          Mist
+        </p>
+      </li>
+    </a>
+    <a
+      class="forecast__item"
+      href="/NewYork"
+    >
+      <li>
+        <p
+          class="forecast__itemDate"
+        >
+          12/09
+        </p>
+        <img
+          alt=""
+          src="//cdn.weatherapi.com/weather/64x64/day/119.png"
+        />
+        <p
+          class="forecast__itemName"
+        >
+          Cloudy
+        </p>
+      </li>
+    </a>
+    <a
+      class="forecast__item"
+      href="/NewYork"
+    >
+      <li>
+        <p
+          class="forecast__itemDate"
+        >
+          12/10
+        </p>
+        <img
+          alt=""
+          src="//cdn.weatherapi.com/weather/64x64/day/308.png"
+        />
+        <p
+          class="forecast__itemName"
+        >
+          Heavy rain
+        </p>
+      </li>
+    </a>
+    <a
+      class="forecast__item"
+      href="/NewYork"
+    >
+      <li>
+        <p
+          class="forecast__itemDate"
+        >
+          12/11
+        </p>
+        <img
+          alt=""
+          src="//cdn.weatherapi.com/weather/64x64/day/308.png"
+        />
+        <p
+          class="forecast__itemName"
+        >
+          Heavy rain
+        </p>
+      </li>
+    </a>
+    <a
+      class="forecast__item"
+      href="/NewYork"
+    >
+      <li>
+        <p
+          class="forecast__itemDate"
+        >
+          12/12
+        </p>
+        <img
+          alt=""
+          src="//cdn.weatherapi.com/weather/64x64/day/113.png"
+        />
+        <p
+          class="forecast__itemName"
+        >
+          Sunny
+        </p>
+      </li>
+    </a>
+  </ul>
+</div>
+`;

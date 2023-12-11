@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 
 import * as Fetchers from "../../hooks/fetchers/fetchers";
 import { mockForecastWeather } from "../../mock";
@@ -20,7 +20,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("App", () => {
-  test("init renders correctly", async () => {
+  test("init renders correctly", () => {
     const { container } = render(<Date />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("New York at 12/01");
     expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
@@ -30,6 +30,7 @@ describe("App", () => {
   test("renders correctly fetch success", async () => {
     jest.spyOn(Fetchers, "getForecastWeather").mockResolvedValueOnce(mockForecastWeather);
     const { container } = render(<Date />);
+    await waitForElementToBeRemoved(() => screen.getByText(/Loading.../i));
     await waitFor(() => {
       expect(screen.getByText(/Humidity:/i)).toBeInTheDocument();
       expect(screen.getByText(/Sunset:/i)).toBeInTheDocument();
