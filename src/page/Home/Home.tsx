@@ -91,7 +91,7 @@ function Home() {
             )}
             {forecast && (
               <>
-                <h3>Next 5days weather</h3>
+                <h3>5days weather</h3>
                 <ul className="forecast">
                   {forecast.forecastday.map((item) => {
                     const sendPathParams: StateParams = { location: location?.name, date: item.date };

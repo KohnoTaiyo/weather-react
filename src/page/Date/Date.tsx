@@ -103,6 +103,16 @@ function Date() {
                 {`Sunset: ${dayData.astro.sunset}`}
               </p>
             </div>
+            <div className="time">
+              {dayData.hour.map((item) => (
+                <div className="time__item" key={item.time}>
+                  <p>{item.time.slice(-5)}</p>
+                  <img src={item.condition.icon} alt={item.condition.text} />
+                  <p>{`${item.temp_c}°C`}</p>
+                  <p>{`${item.chance_of_rain}%`}</p>
+                </div>
+              ))}
+            </div>
           </>
         )
       )}
