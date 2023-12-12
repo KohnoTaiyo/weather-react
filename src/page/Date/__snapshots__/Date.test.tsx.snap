@@ -1,59 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App init renders correctly 1`] = `
+exports[`Date renders correctly 1`] = `
 <div>
-  <h1>
-    New York at 12/01
-  </h1>
-  <form>
-    <div
-      class="textBox"
-    >
-      <input
-        class="textBox__input"
-        placeholder="location"
-        required=""
-        type="text"
-        value="New York"
-      />
-      <input
-        class="textBox__submit"
-        tabindex="0"
-        type="submit"
-        value="Search"
-      />
-    </div>
-  </form>
-  <p>
-    Loading...
-  </p>
-</div>
-`;
-
-exports[`App renders correctly fetch success 1`] = `
-<div>
-  <h1>
-    New York at 12/01
-  </h1>
-  <form>
-    <div
-      class="textBox"
-    >
-      <input
-        class="textBox__input"
-        placeholder="location"
-        required=""
-        type="text"
-        value="New York"
-      />
-      <input
-        class="textBox__submit"
-        tabindex="0"
-        type="submit"
-        value="Search"
-      />
-    </div>
-  </form>
   <div
     class="condition"
   >
